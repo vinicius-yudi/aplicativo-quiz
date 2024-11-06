@@ -127,11 +127,11 @@ val perguntas = listOf(
 @SuppressLint("UnusedContentLambdaTargetStateParameter")
 @Composable
 fun TelaQuiz(navController: NavController) {
-    var perguntasEmbaralhadas by remember { mutableStateOf(perguntas.shuffled()) } // Lista de perguntas embaralhadas
+    var perguntasEmbaralhadas by remember { mutableStateOf(perguntas.shuffled()) }
     var perguntaAtual by remember { mutableStateOf(0) }
     var pontuacao by remember { mutableStateOf(0) }
     var tempoInicial by remember { mutableStateOf(System.currentTimeMillis()) }
-    val pergunta = perguntasEmbaralhadas[perguntaAtual] // Usa a pergunta embaralhada
+    val pergunta = perguntasEmbaralhadas[perguntaAtual]
     val opcoesEmbaralhadas = pergunta.opcoesResposta.shuffled()
     var respostaSelecionada by remember { mutableStateOf<String?>(null) }
     var respostaCorretaSelecionada by remember { mutableStateOf(false) }
