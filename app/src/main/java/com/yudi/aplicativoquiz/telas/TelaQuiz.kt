@@ -81,7 +81,7 @@ val perguntas = listOf(
     ),
     Pergunta(
         textoPergunta = "Esta bandeira representa qual país?",
-        imagemId = R.drawable.papua,
+        imagemId = R.drawable.papua_nova_guine,
         opcoesResposta = listOf("Papua Nova Guiné", "Timor-Leste", "Indonésia", "Filipinas"),
         respostaCorreta = "Papua Nova Guiné"
     ),
@@ -127,15 +127,15 @@ val perguntas = listOf(
 @SuppressLint("UnusedContentLambdaTargetStateParameter")
 @Composable
 fun TelaQuiz(navController: NavController) {
+    var perguntasEmbaralhadas by remember { mutableStateOf(perguntas.shuffled()) } // Lista de perguntas embaralhadas
     var perguntaAtual by remember { mutableStateOf(0) }
     var pontuacao by remember { mutableStateOf(0) }
     var tempoInicial by remember { mutableStateOf(System.currentTimeMillis()) }
-    val pergunta = perguntas[perguntaAtual]
+    val pergunta = perguntasEmbaralhadas[perguntaAtual] // Usa a pergunta embaralhada
     val opcoesEmbaralhadas = pergunta.opcoesResposta.shuffled()
     var respostaSelecionada by remember { mutableStateOf<String?>(null) }
     var respostaCorretaSelecionada by remember { mutableStateOf(false) }
     var esperandoPorProximaPergunta by remember { mutableStateOf(false) }
-
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -149,8 +149,8 @@ fun TelaQuiz(navController: NavController) {
         )
 
         AnimatedContent(targetState = perguntaAtual, transitionSpec = {
-            fadeIn(animationSpec = tween(500)) with fadeOut(animationSpec = tween(500))
-        }) { // Animação de transição entre perguntas
+            fadeIn(animationSpec = tween(1000)) with fadeOut(animationSpec = tween(1000))
+        }) {
             Column(
                 modifier = Modifier.padding(30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -177,7 +177,7 @@ fun TelaQuiz(navController: NavController) {
                 opcoesEmbaralhadas.forEach { opcao ->
                     val isCorreta = opcao == pergunta.respostaCorreta
                     var clicado by remember { mutableStateOf(false) }
-                    val escala by animateFloatAsState(if (clicado) 1.1f else 1f) // Animação de clique no botão
+                    val escala by animateFloatAsState(if (clicado) 1.1f else 1f)
 
                     Button(
                         onClick = {
@@ -188,20 +188,19 @@ fun TelaQuiz(navController: NavController) {
                             val pontos = calcularPontuacao(tempoResposta, isCorreta)
                             pontuacao += pontos
 
-                            // Avança para a próxima pergunta, independentemente de ser correta ou não
                             respostaSelecionada = null
-                            if (perguntaAtual < perguntas.size - 1) {
+                            if (perguntaAtual < perguntasEmbaralhadas.size - 1) {
                                 perguntaAtual++
                                 tempoInicial = System.currentTimeMillis()
                             } else {
-                                // Finalizar o quiz ou reiniciar
+                                navController.navigate("finalizacao/${pontuacao}")
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = when {
-                                clicado && respostaCorretaSelecionada -> Color(0xFF4CAF50) // Verde se correto
-                                clicado && !respostaCorretaSelecionada -> Color(0xFFD32F2F) // Vermelho se incorreto
-                                else -> Color(0xFF6200EE) // Cor padrão
+                                clicado && respostaCorretaSelecionada -> Color(0xFF4CAF50)
+                                clicado && !respostaCorretaSelecionada -> Color(0xFFD32F2F)
+                                else -> Color(0xFF6200EE)
                             }
                         ),
                         modifier = Modifier
