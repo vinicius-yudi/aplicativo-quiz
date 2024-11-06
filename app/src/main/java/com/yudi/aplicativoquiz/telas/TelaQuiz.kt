@@ -42,7 +42,86 @@ val perguntas = listOf(
         opcoesResposta = listOf("China", "Coreia do Sul", "Chile", "Tailândia"),
         respostaCorreta = "Chile"
     ),
-    // Adicione mais perguntas conforme necessário
+
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.belize,
+        opcoesResposta = listOf("Belize", "Bahamas", "Barbados", "Bolívia"),
+        respostaCorreta = "Belize"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.butao,
+        opcoesResposta = listOf("Butão", "Nepal", "Sri Lanka", "Mongólia"),
+        respostaCorreta = "Butão"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.suriname,
+        opcoesResposta = listOf("Suriname", "Gana", "Guiana", "Paraguai"),
+        respostaCorreta = "Suriname"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.uzbequistao,
+        opcoesResposta = listOf("Uzbequistão", "Cazaquistão", "Turcomenistão", "Tadjiquistão"),
+        respostaCorreta = "Uzbequistão"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.angola,
+        opcoesResposta = listOf("Angola", "Moçambique", "Guiné-Bissau", "Cabo Verde"),
+        respostaCorreta = "Angola"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.malawi,
+        opcoesResposta = listOf("Malawi", "Zâmbia", "Quênia", "Ruanda"),
+        respostaCorreta = "Malawi"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.papua,
+        opcoesResposta = listOf("Papua Nova Guiné", "Timor-Leste", "Indonésia", "Filipinas"),
+        respostaCorreta = "Papua Nova Guiné"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.zimbabue,
+        opcoesResposta = listOf("Zimbábue", "Zâmbia", "Botsuana", "Malaui"),
+        respostaCorreta = "Zimbábue"
+    ),
+
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.indonesia,
+        opcoesResposta = listOf("Indonésia", "Mônaco", "Polônia", "Singapura"),
+        respostaCorreta = "Indonésia"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.san_marino,
+        opcoesResposta = listOf("San Marino", "Eslováquia", "Grécia", "Eslovênia"),
+        respostaCorreta = "San Marino"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.austria,
+        opcoesResposta = listOf("Áustria", "Letônia", "Dinamarca", "Alemanha"),
+        respostaCorreta = "Áustria"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.australia,
+        opcoesResposta = listOf("Austrália", "Nova Zelândia", "Reino Unido", "Fiji"),
+        respostaCorreta = "Austrália"
+    ),
+    Pergunta(
+        textoPergunta = "Esta bandeira representa qual país?",
+        imagemId = R.drawable.granada,
+        opcoesResposta = listOf("Granada", "Jamaica", "Barbados", "Santa Lúcia"),
+        respostaCorreta = "Granada"
+    )
 )
 
 @SuppressLint("UnusedContentLambdaTargetStateParameter")
@@ -51,10 +130,12 @@ fun TelaQuiz(navController: NavController) {
     var perguntaAtual by remember { mutableStateOf(0) }
     var pontuacao by remember { mutableStateOf(0) }
     var tempoInicial by remember { mutableStateOf(System.currentTimeMillis()) }
-    var respostaSelecionada by remember { mutableStateOf<String?>(null) }
-
     val pergunta = perguntas[perguntaAtual]
     val opcoesEmbaralhadas = pergunta.opcoesResposta.shuffled()
+    var respostaSelecionada by remember { mutableStateOf<String?>(null) }
+    var respostaCorretaSelecionada by remember { mutableStateOf(false) }
+    var esperandoPorProximaPergunta by remember { mutableStateOf(false) }
+
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -102,25 +183,29 @@ fun TelaQuiz(navController: NavController) {
                         onClick = {
                             clicado = true
                             respostaSelecionada = opcao
+                            respostaCorretaSelecionada = isCorreta
                             val tempoResposta = System.currentTimeMillis() - tempoInicial
                             val pontos = calcularPontuacao(tempoResposta, isCorreta)
                             pontuacao += pontos
 
-                            if (isCorreta) {
-                                respostaSelecionada = null
-                                if (perguntaAtual < perguntas.size - 1) {
-                                    perguntaAtual++
-                                    tempoInicial = System.currentTimeMillis()
-                                } else {
-                                    // Finalizar o quiz ou reiniciar
-                                }
+                            // Avança para a próxima pergunta, independentemente de ser correta ou não
+                            respostaSelecionada = null
+                            if (perguntaAtual < perguntas.size - 1) {
+                                perguntaAtual++
+                                tempoInicial = System.currentTimeMillis()
+                            } else {
+                                // Finalizar o quiz ou reiniciar
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (respostaSelecionada == opcao && isCorreta) Color(0xFF4CAF50) else Color(0xFF6200EE) // Verde se correto
+                            containerColor = when {
+                                clicado && respostaCorretaSelecionada -> Color(0xFF4CAF50) // Verde se correto
+                                clicado && !respostaCorretaSelecionada -> Color(0xFFD32F2F) // Vermelho se incorreto
+                                else -> Color(0xFF6200EE) // Cor padrão
+                            }
                         ),
                         modifier = Modifier
-                            .scale(escala) // Animação de escala no botão
+                            .scale(escala)
                             .width(250.dp)
                             .height(60.dp)
                             .padding(vertical = 8.dp)
@@ -131,7 +216,7 @@ fun TelaQuiz(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                AnimatedContent(targetState = pontuacao) { pontuacaoAnimada -> // Animação na pontuação
+                AnimatedContent(targetState = pontuacao) { pontuacaoAnimada ->
                     Text(
                         text = "Pontuação: $pontuacao",
                         color = Color.White
@@ -141,6 +226,8 @@ fun TelaQuiz(navController: NavController) {
         }
     }
 }
+
+
 
 fun calcularPontuacao(tempoResposta: Long, respostaCorreta: Boolean): Int {
     if (!respostaCorreta) return 0
