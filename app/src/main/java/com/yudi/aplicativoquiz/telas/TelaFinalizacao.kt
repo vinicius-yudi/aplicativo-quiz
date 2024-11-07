@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,12 +35,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.yudi.aplicativoquiz.R
 import com.yudi.aplicativoquiz.Routes
+import com.yudi.aplicativoquiz.data.AppDatabase
+import com.yudi.aplicativoquiz.data.Leaderboard
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TelaFinalizacao(
     navController: NavController,
     pontuacao: Int,
+    db: AppDatabase,
     onSave: (String) -> Unit
 ) {
     var nome by remember { mutableStateOf("") }
@@ -83,16 +88,15 @@ fun TelaFinalizacao(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Campo de texto para o nome com altura adequada
         TextField(
             value = nome,
             onValueChange = { nome = it },
             label = { Text("Seu Nome") },
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFFF0F0F0), RoundedCornerShape(8.dp)), // Mantém o fundo arredondado
+                .background(Color(0xFFF0F0F0), RoundedCornerShape(8.dp)),
             colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Transparent // Define o fundo transparente para não sobrepor o background
+                containerColor = Color.Transparent
             )
         )
 
@@ -101,7 +105,7 @@ fun TelaFinalizacao(
         Button(
             onClick = {
                 if (nome.isNotBlank()) {
-                    onSave(nome)
+                    onSave(nome) // Chama a função de salvar quando o nome for válido
                     navController.navigate(Routes.leaderboard) {
                         popUpTo(Routes.menu) { inclusive = false }
                     }
@@ -117,11 +121,4 @@ fun TelaFinalizacao(
             Text(text = "Salvar")
         }
     }
-}
-
-
-@Composable
-@Preview
-fun TelaFinalizacaoPreview() {
-    TelaFinalizacao(navController = rememberNavController(), pontuacao = 10) {}
 }
