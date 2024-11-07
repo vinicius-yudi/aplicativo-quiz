@@ -102,7 +102,7 @@ fun TelaFinalizacao(
             onClick = {
                 if (nome.isNotBlank()) {
                     onSave(nome)
-                    navController.navigate("leaderboard/{nome}/{pontuacao}"){
+                    navController.navigate(Routes.leaderboard) {
                         popUpTo(Routes.menu) { inclusive = false }
                     }
                 }
