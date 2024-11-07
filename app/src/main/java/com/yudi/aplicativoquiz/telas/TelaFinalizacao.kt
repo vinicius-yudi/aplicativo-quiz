@@ -105,7 +105,7 @@ fun TelaFinalizacao(
         Button(
             onClick = {
                 if (nome.isNotBlank()) {
-                    onSave(nome) // Chama a função de salvar quando o nome for válido
+                    onSave(nome)
                     navController.navigate(Routes.leaderboard) {
                         popUpTo(Routes.menu) { inclusive = false }
                     }

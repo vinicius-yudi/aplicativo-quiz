@@ -31,93 +31,93 @@ data class Pergunta(
 
 val perguntas = listOf(
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.brasil,
         opcoesResposta = listOf("Brasil", "Chile", "Peru", "Camarões"),
         respostaCorreta = "Brasil"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.chile,
         opcoesResposta = listOf("China", "Coreia do Sul", "Chile", "Tailândia"),
         respostaCorreta = "Chile"
     ),
 
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.belize,
         opcoesResposta = listOf("Belize", "Bahamas", "Barbados", "Bolívia"),
         respostaCorreta = "Belize"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.butao,
         opcoesResposta = listOf("Butão", "Nepal", "Sri Lanka", "Mongólia"),
         respostaCorreta = "Butão"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.suriname,
         opcoesResposta = listOf("Suriname", "Gana", "Guiana", "Paraguai"),
         respostaCorreta = "Suriname"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.uzbequistao,
         opcoesResposta = listOf("Uzbequistão", "Cazaquistão", "Turcomenistão", "Tadjiquistão"),
         respostaCorreta = "Uzbequistão"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.angola,
         opcoesResposta = listOf("Angola", "Moçambique", "Guiné-Bissau", "Cabo Verde"),
         respostaCorreta = "Angola"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.malawi,
         opcoesResposta = listOf("Malawi", "Zâmbia", "Quênia", "Ruanda"),
         respostaCorreta = "Malawi"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.papua_nova_guine,
         opcoesResposta = listOf("Papua Nova Guiné", "Timor-Leste", "Indonésia", "Filipinas"),
         respostaCorreta = "Papua Nova Guiné"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.zimbabue,
         opcoesResposta = listOf("Zimbábue", "Zâmbia", "Botsuana", "Malaui"),
         respostaCorreta = "Zimbábue"
     ),
 
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.indonesia,
         opcoesResposta = listOf("Indonésia", "Mônaco", "Polônia", "Singapura"),
         respostaCorreta = "Indonésia"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.san_marino,
         opcoesResposta = listOf("San Marino", "Eslováquia", "Grécia", "Eslovênia"),
         respostaCorreta = "San Marino"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.austria,
         opcoesResposta = listOf("Áustria", "Letônia", "Dinamarca", "Alemanha"),
         respostaCorreta = "Áustria"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.australia,
         opcoesResposta = listOf("Austrália", "Nova Zelândia", "Reino Unido", "Fiji"),
         respostaCorreta = "Austrália"
     ),
     Pergunta(
-        textoPergunta = "Esta bandeira representa qual país?",
+        textoPergunta = "De qual país é essa bandeira?",
         imagemId = R.drawable.granada,
         opcoesResposta = listOf("Granada", "Jamaica", "Barbados", "Santa Lúcia"),
         respostaCorreta = "Granada"
@@ -135,7 +135,6 @@ fun TelaQuiz(navController: NavController) {
     val opcoesEmbaralhadas = pergunta.opcoesResposta.shuffled()
     var respostaSelecionada by remember { mutableStateOf<String?>(null) }
     var respostaCorretaSelecionada by remember { mutableStateOf(false) }
-    var esperandoPorProximaPergunta by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier.fillMaxSize(),

@@ -2,10 +2,8 @@ package com.yudi.aplicativoquiz.telas
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +21,8 @@ import com.yudi.aplicativoquiz.Routes
 
 @Composable
 fun Menu(navController: NavController) {
+    var isDialogOpen by remember { mutableStateOf(false) } // Controle do estado do modal
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -97,7 +97,51 @@ fun Menu(navController: NavController) {
                         fontSize = 18.sp
                     )
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(
+                    onClick = { isDialogOpen = true },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFFA500)
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .height(50.dp)
+                ) {
+                    Text(
+                        text = "Regras",
+                        color = Color.White,
+                        fontSize = 18.sp
+                    )
+                }
             }
+        }
+
+        if (isDialogOpen) {
+            AlertDialog(
+                onDismissRequest = { isDialogOpen = false },
+                title = {
+                    Text(text = "Regras do Quiz", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
+                },
+                text = {
+                    Text(
+                        text =  "1. Responda o mais rápido possível.\n" +
+                                "2. Acertou ou Errou o quiz avança\n"+
+                                "3. A pontuação funciona assim:\n"+
+                                "Respondeu dentro de 5s = 10 pontos \n"+
+                                "Demorou mais de 5s = 5 pontos \n"+
+                                "Passou de 10s = 2 pontos",
+
+                        fontSize = 16.sp
+                    )
+                },
+                confirmButton = {
+
+                },
+                modifier = Modifier.fillMaxWidth(0.8f)
+                    .height(300.dp)
+
+            )
         }
     }
 }

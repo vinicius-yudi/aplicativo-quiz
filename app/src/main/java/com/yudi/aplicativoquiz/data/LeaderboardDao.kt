@@ -9,6 +9,6 @@ interface LeaderboardDao {
     @Insert
     suspend fun insert(leaderboard: Leaderboard)
 
-    @Query("SELECT * FROM leaderboard ORDER BY pontuacao DESC LIMIT 5")
-    suspend fun getTopScores(): List<Leaderboard>
+    @Query("SELECT * FROM leaderboard ORDER BY pontuacao DESC")
+    suspend fun getAllScores(): List<Leaderboard>
 }

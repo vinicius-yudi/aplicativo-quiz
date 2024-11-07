@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Configura o banco de dados
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "leaderboard-db"
@@ -53,7 +52,6 @@ class MainActivity : ComponentActivity() {
                             pontuacao = pontuacao,
                             db = db
                         ) { nome ->
-                            // Usando lifecycleScope para chamar a função suspensa dentro de uma corrotina
                             lifecycleScope.launch {
                                 val leaderboard = Leaderboard(nome = nome, pontuacao = pontuacao)
                                 db.leaderboardDao().insert(leaderboard)
