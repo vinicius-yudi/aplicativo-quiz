@@ -125,7 +125,7 @@ fun Menu(navController: NavController) {
                 },
                 text = {
                     Text(
-                        text =  "1. Responda o mais rápido possível.\n" +
+                        text =  "1. Responda o mais rápido possível\n" +
                                 "2. Acertou ou Errou o quiz avança\n"+
                                 "3. A pontuação funciona assim:\n"+
                                 "Respondeu dentro de 5s = 10 pontos \n"+

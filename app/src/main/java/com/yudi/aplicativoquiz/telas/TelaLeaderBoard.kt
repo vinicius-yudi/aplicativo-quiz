@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.yudi.aplicativoquiz.R
+import com.yudi.aplicativoquiz.Routes
 import com.yudi.aplicativoquiz.data.AppDatabase
 import com.yudi.aplicativoquiz.data.Leaderboard
 
@@ -106,6 +109,19 @@ fun TelaLeaderBoard(
                         }
                     }
                 }
+            }
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            // Adiciona o botão de voltar para o menu
+            Button(
+                onClick = { navController.navigate(Routes.menu) },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF03DAC5)),
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .height(50.dp)
+            ) {
+                Text(text = "Voltar ao Menu", color = Color.White)
             }
         }
     }
