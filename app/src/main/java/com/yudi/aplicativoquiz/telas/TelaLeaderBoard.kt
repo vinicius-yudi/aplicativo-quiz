@@ -113,7 +113,6 @@ fun TelaLeaderBoard(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            // Adiciona o botão de voltar para o menu
             Button(
                 onClick = { navController.navigate(Routes.menu) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF03DAC5)),

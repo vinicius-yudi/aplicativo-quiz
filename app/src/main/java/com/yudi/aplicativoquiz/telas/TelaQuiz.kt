@@ -3,6 +3,7 @@
 package com.yudi.aplicativoquiz.telas
 
 import android.annotation.SuppressLint
+import android.media.MediaPlayer
 import androidx.compose.animation.*
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -135,6 +137,9 @@ fun TelaQuiz(navController: NavController) {
     val opcoesEmbaralhadas = pergunta.opcoesResposta.shuffled()
     var respostaSelecionada by remember { mutableStateOf<String?>(null) }
     var respostaCorretaSelecionada by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val mediaPlayerAcerto = remember { MediaPlayer.create(context, R.raw.correto) }
+
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -178,6 +183,7 @@ fun TelaQuiz(navController: NavController) {
                     var clicado by remember { mutableStateOf(false) }
                     val escala by animateFloatAsState(if (clicado) 1.1f else 1f)
 
+
                     Button(
                         onClick = {
                             clicado = true
@@ -186,6 +192,10 @@ fun TelaQuiz(navController: NavController) {
                             val tempoResposta = System.currentTimeMillis() - tempoInicial
                             val pontos = calcularPontuacao(tempoResposta, isCorreta)
                             pontuacao += pontos
+
+                            if (isCorreta) {
+                                mediaPlayerAcerto.start()
+                            }
 
                             respostaSelecionada = null
                             if (perguntaAtual < perguntasEmbaralhadas.size - 1) {

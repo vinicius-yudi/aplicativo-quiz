@@ -21,7 +21,7 @@ import com.yudi.aplicativoquiz.Routes
 
 @Composable
 fun Menu(navController: NavController) {
-    var isDialogOpen by remember { mutableStateOf(false) } // Controle do estado do modal
+    var isDialogOpen by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -139,7 +139,7 @@ fun Menu(navController: NavController) {
 
                 },
                 modifier = Modifier.fillMaxWidth(0.8f)
-                    .height(300.dp)
+                    .height(350.dp)
 
             )
         }
